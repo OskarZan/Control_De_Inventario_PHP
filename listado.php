@@ -5,18 +5,20 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Conexión a la base de datos
-$dsn = 'mysql:host=127.0.0.1;port=3306;dbname=dwes;charset=utf8';
-$usuario = 'root';
-$clave = 'Elpana.123';
+
+$host = getenv('DB_HOST');
+$db   = getenv('DB_NAME');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASSWORD');
+$port = getenv('DB_PORT');
 
 try {
-    $pdo = new PDO($dsn, $usuario, $clave);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8", $user, $pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    http_response_code(500);
-    // En un entorno real, no mostrarías el error detallado al usuario
-    die("<div class='container'><p>Error de conexión a la base de datos. Por favor, inténtelo más tarde.</p></div>");
+    echo "❌ Error de conexión: " . $e->getMessage();
 }
+
 
 // Obtener familias para el desplegable
 try {
