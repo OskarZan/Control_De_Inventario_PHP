@@ -9,7 +9,7 @@ require_once 'conexion.php';
 
 // Obtener familias para el desplegable
 try {
-    $stmt = $pdo->query("SELECT cod, nombre FROM familia ORDER BY nombre ASC");
+    $stmt = $conn->query("SELECT cod, nombre FROM familia ORDER BY nombre ASC");
     $familias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     http_response_code(500);
