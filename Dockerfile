@@ -1,8 +1,8 @@
 FROM php:8.2-apache
 
 # Instala extensiones necesarias
-RUN docker-php-ext-install pdo pdo_mysql
-
+# --- POR ESTA LÍNEA ---
+RUN docker-php-ext-install pdo pdo_pgsql
 # --- ¡LÍNEA CORREGIDA! ---
 # Copia todo desde la raíz del repo ('.') al servidor web
 COPY . /var/www/html/
