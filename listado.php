@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
     $familia_seleccionada = $_POST['familia'];
     if (!empty($familia_seleccionada)) {
         try {
-            $stmt = $pdo->prepare("SELECT cod, nombre_corto, PVP FROM producto WHERE familia = ? ORDER BY nombre_corto ASC");
+            $stmt = $conn->prepare("SELECT cod, nombre_corto, PVP FROM producto WHERE familia = ? ORDER BY nombre_corto ASC");
             $stmt->execute([$familia_seleccionada]);
             $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

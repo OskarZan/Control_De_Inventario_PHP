@@ -11,28 +11,25 @@ require_once 'conexion.php';
 
 
 // Consulta para obtener los datos del producto por su código
-$stmt = $mysqli->prepare("SELECT nombre_corto, nombre, descripcion, familia, PVP FROM producto WHERE cod = ?");
-$stmt->bind_param("s", $cod);
+$stmt = $conn->prepare("SELECT nombre_corto, nombre, descripcion, familia, PVP FROM producto WHERE cod = ?");
 $stmt->execute();
-$stmt->bind_result($nombre_corto, $nombre, $descripcion, $familia, $pvp);
+$producto = $stmt->fetch(PDO::FETCH_OBJ);
 
-if (!$stmt->fetch()) {
-    $stmt->close();
-    $mysqli->close();
+if (!$producto) {
+    $conn = null;
     die("Producto no encontrado.");
 }
-$stmt->close();
+$stmt = null;
 
 // Consulta para obtener todas las familias
-$familias_result = $mysqli->query("SELECT cod, nombre FROM familia ORDER BY nombre ASC");
+$familias_result = $conn->query("SELECT cod, nombre FROM familia ORDER BY nombre ASC");
 $todas_las_familias = [];
 if ($familias_result) {
-    while ($fila = $familias_result->fetch_assoc()) {
+    while ($fila = $familias_result->fetch(PDO::FETCH_ASSOC)) {
         $todas_las_familias[] = $fila;
     }
-    $familias_result->close();
 }
-$mysqli->close();
+$conn = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -153,34 +150,34 @@ $mysqli->close();
 <body>
     <div class="container">
         <h1>Editar Producto</h1>
-        <form action="actualizar.php" method="post">
+        <form action="actualizar.php" method="post" novalidate>
             <input type="hidden" name="cod" value="<?= htmlspecialchars($cod) ?>">
             
             <div class="form-group">
                 <label for="nombre_corto">Nombre corto:</label>
-                <input type="text" id="nombre_corto" name="nombre_corto" value="<?= htmlspecialchars($nombre_corto) ?>" required>
+                <input type="text" id="nombre_corto" name="nombre_corto" value="<?= htmlspecialchars($producto->nombre_corto) ?>" required>
             </div>
             
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($nombre) ?>" required>
+                <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($producto->nombre) ?>">
             </div>
 
             <div class="form-group">
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" required><?= htmlspecialchars($descripcion) ?></textarea>
+                <textarea id="descripcion" name="descripcion"><?= htmlspecialchars($producto->descripcion) ?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="PVP">PVP (€):</label>
-                <input type="number" id="PVP" step="0.01" name="PVP" value="<?= htmlspecialchars($pvp) ?>" required>
+                <input type="number" id="PVP" step="0.01" name="PVP" value="<?= htmlspecialchars($producto->PVP) ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="familia">Familia:</label>
                 <select id="familia" name="familia" required>
                     <?php foreach ($todas_las_familias as $f): ?>
-                        <option value="<?= htmlspecialchars($f['cod']) ?>" <?= ($f['cod'] == $familia) ? 'selected' : '' ?>>
+                        <option value="<?= htmlspecialchars($f['cod']) ?>" <?= ($f['cod'] == $producto->familia) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($f['nombre']) ?>
                         </option>
                     <?php endforeach; ?>
