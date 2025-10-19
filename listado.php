@@ -10,7 +10,7 @@ require_once 'conexion.php';
 // Obtener familias para el desplegable
 try {
     $stmt = $conn->query("SELECT cod, nombre FROM familia ORDER BY nombre ASC");
-    $familias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $familias = $stmt->fetchAll(PDO::FETCH_OBJ);
 } catch (PDOException $e) {
     http_response_code(500);
     die("<div class='container'><p>Error al obtener las familias.</p></div>");
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
         try {
             $stmt = $conn->prepare("SELECT cod, nombre_corto, PVP FROM producto WHERE familia = ? ORDER BY nombre_corto ASC");
             $stmt->execute([$familia_seleccionada]);
-            $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $productos = $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             http_response_code(500);
             die("<div class='container'><p>Error al obtener los productos.</p></div>");
@@ -178,9 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
             <select name="familia" id="familia" onchange="this.form.submit()">
                 <option value="">-- Seleccione una --</option>
                 <?php foreach ($familias as $f): ?>
-                    <option value="<?= htmlspecialchars($f['cod']) ?>"
-                        <?= ($familia_seleccionada == $f['cod']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($f['nombre']) ?>
+                    <option value="<?= htmlspecialchars($f->cod) ?>"
+                        <?= ($familia_seleccionada == $f->cod) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($f->nombre) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -200,10 +200,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
                 <tbody>
                     <?php foreach ($productos as $producto): ?>
                         <tr>
-                            <td><?= htmlspecialchars($producto['nombre_corto']) ?></td>
-                            <td><?= htmlspecialchars(number_format($producto['PVP'], 2, ',', '.')) ?></td>
+                            <td><?= htmlspecialchars($producto->nombre_corto) ?></td>
+                            <td><?= htmlspecialchars(number_format($producto->pvp, 2, ',', '.')) ?></td>
                             <td>
-                                <a href="editar.php?cod=<?= urlencode($producto['cod']) ?>">Editar</a>
+                                <a href="editar.php?cod=<?= urlencode($producto->cod) ?>">Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
