@@ -1,9 +1,12 @@
 FROM php:8.2-apache
 
-# Instala extensiones necesarias
-# --- POR ESTA LÍNEA ---
-RUN docker-php-ext-install pdo pdo_pgsql
-# --- ¡LÍNEA CORREGIDA! ---
+# Instala las dependencias de sistema para PostgreSQL (libpq-dev)
+# y luego instala la extensión de PHP (pdo_pgsql)
+RUN apt-get update \
+    && apt-get install -y libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copia todo desde la raíz del repo ('.') al servidor web
 COPY . /var/www/html/
 
