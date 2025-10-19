@@ -48,22 +48,24 @@ $sql = "UPDATE producto SET nombre_corto = ?, nombre = ?, descripcion = ?, PVP =
 $stmt = $conn->prepare($sql);
 
 if ($stmt) {
-    $stmt->bind_param('sssdss', $nombre_corto, $nombre, $descripcion, $PVP, $familia, $cod);
+    $params = [$nombre_corto, $nombre, $descripcion, $PVP, $familia, $cod];
     
     // Simular un retraso para que el usuario vea el mensaje
     sleep(1); 
 
-    if ($stmt->execute()) {
+    if ($stmt->execute($params)) {
         echo "<div class='mensaje exito'>¡Finalizado! El producto ha sido actualizado correctamente.</div>";
     } else {
-        echo "<div class='mensaje error'>Error al ejecutar la actualización: " . htmlspecialchars($stmt->error) . "</div>";
+        $errorInfo = $stmt->errorInfo();
+        echo "<div class='mensaje error'>Error al ejecutar la actualización: " . htmlspecialchars(implode(' | ', $errorInfo)) . "</div>";
     }
-    $stmt->close();
+    $stmt = null;
 } else {
-    echo "<div class='mensaje error'>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</div>";
+    $errorInfo = $conn->errorInfo();
+    echo "<div class='mensaje error'>Error al preparar la consulta: " . htmlspecialchars(implode(' | ', $errorInfo)) . "</div>";
 }
 
-$conn->close();
+$conn = null;
 ?>
 
 <br>

@@ -7,11 +7,8 @@ if (!isset($_GET['cod'])) {
 $cod = $_GET['cod'];
 
 // Conexión a la base de datos
-// Usamos MySQLi para mantener la consistencia del fichero original
-$mysqli = new mysqli("127.0.0.1", "ut3", "ut3", "dwes");
-if ($mysqli->connect_errno) {
-    die("Error de conexión: " . $mysqli->connect_error);
-}
+require_once 'conexion.php'; 
+
 
 // Consulta para obtener los datos del producto por su código
 $stmt = $mysqli->prepare("SELECT nombre_corto, nombre, descripcion, familia, PVP FROM producto WHERE cod = ?");
