@@ -12,7 +12,7 @@ require_once 'conexion.php';
 
 // Consulta para obtener los datos del producto por su código
 $stmt = $conn->prepare("SELECT nombre_corto, nombre, descripcion, familia, PVP FROM producto WHERE cod = ?");
-$stmt->execute();
+$stmt->execute([$cod]);
 $producto = $stmt->fetch(PDO::FETCH_OBJ);
 
 if (!$producto) {
