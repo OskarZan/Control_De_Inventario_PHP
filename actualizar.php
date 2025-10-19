@@ -33,11 +33,7 @@ flush();
 ob_flush();
 
 // Conexión a la base de datos
-$conn = new mysqli('127.0.0.1', 'ut3', 'ut3', 'dwes');
-if ($conn->connect_error) {
-    echo "<div class='mensaje error'>Error de conexión: " . htmlspecialchars($conn->connect_error) . "</div>";
-    exit;
-}
+require_once 'conexion.php';
 
 // Recoge los datos del formulario
 $cod = $_POST['cod'];
