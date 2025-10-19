@@ -5,20 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Conexión a la base de datos
-
-$host = getenv('DB_HOST');
-$db   = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASSWORD');
-$port = getenv('DB_PORT');
-
-try {
-    $conn = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8", $user, $pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "❌ Error de conexión: " . $e->getMessage();
-}
-
+require_once 'conexion.php';
 
 // Obtener familias para el desplegable
 try {
