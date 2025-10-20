@@ -160,17 +160,17 @@ $conn = null;
             
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($producto->nombre) ?>">
+                <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($producto->nombre ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion"><?= htmlspecialchars($producto->descripcion) ?></textarea>
+                <textarea id="descripcion" name="descripcion"><?= htmlspecialchars($producto->descripcion ?? '') ?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="PVP">PVP (€):</label>
-                <input type="number" id="PVP" step="0.01" name="PVP" value="<?= htmlspecialchars($producto->PVP) ?>" required>
+                <input type="number" id="PVP" step="0.01" name="PVP" value="<?= htmlspecialchars($producto->pvp ?? 0) ?>" required>
             </div>
 
             <div class="form-group">

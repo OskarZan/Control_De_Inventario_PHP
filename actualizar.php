@@ -40,7 +40,7 @@ $cod = $_POST['cod'];
 $nombre_corto = $_POST['nombre_corto'] ?? '';
 $nombre = $_POST['nombre'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
-$PVP = floatval($_POST['PVP'] ?? 0);
+$pvp = floatval($_POST['PVP'] ?? 0);
 $familia = $_POST['familia'] ?? '';
 
 // Preparar y ejecutar la actualización
@@ -48,7 +48,7 @@ $sql = "UPDATE producto SET nombre_corto = ?, nombre = ?, descripcion = ?, PVP =
 $stmt = $conn->prepare($sql);
 
 if ($stmt) {
-    $params = [$nombre_corto, $nombre, $descripcion, $PVP, $familia, $cod];
+    $params = [$nombre_corto, $nombre, $descripcion, $pvp, $familia, $cod];
     
     // Simular un retraso para que el usuario vea el mensaje
     sleep(1); 
