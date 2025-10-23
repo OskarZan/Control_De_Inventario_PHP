@@ -169,8 +169,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
     </style>
 </head>
 <body>
-    <h1> Proyecto de Oscar Manuel Malave Ramirez </h1> 
-    <h1> 2 DAW Vespertino </h1> 
     <div class="container">
         <h1>Listado de Productos</h1>
         <p class="subtitle">Seleccione una familia para ver los productos asociados.</p>
@@ -215,5 +213,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
             <p class="no-products">No hay productos para la familia seleccionada.</p>
         <?php endif; ?>
     </div>
+    <footer>
+        <div id="footer"> 
+            <h1> Proyecto de Oscar Manuel Malave Ramirez </h1> 
+            <h1> 2 DAW Vespertino </h1>
+            <p><?php echo date('d/m/Y'); ?></p>
+        </div>
+    </footer>
 </body>
 </html>
