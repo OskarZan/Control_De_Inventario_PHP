@@ -166,6 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
             background-color: #f8f9fa;
             border-radius: 6px;
         }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
