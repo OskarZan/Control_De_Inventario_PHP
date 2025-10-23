@@ -47,9 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
             background-color: #f8f9fa;
             color: #212529;
             margin: 0;
-            padding: 2rem;
+            min-height: 100vh;           /* ocupa toda la altura del viewport */
             display: flex;
-            justify-content: center;
+            flex-direction: column;      /* apila .container y footer en columna */
+            align-items: center;
+            padding: 2rem;
         }
 
         .container {
@@ -59,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
             padding: 2rem 2.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* mantiene el contenido arriba; el footer se empuja hacia abajo */
         }
 
         h1 {
@@ -167,8 +170,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['familia'])) {
             border-radius: 6px;
         }
         footer {
+            margin-top: auto;            /* empuja el footer al final del viewport si hay poco contenido */
             text-align: center;
-            margin-top: 3rem;
+            width: 100%;
+            padding: 1rem 0;
             color: #6c757d;
             font-size: 0.9rem;
         }
